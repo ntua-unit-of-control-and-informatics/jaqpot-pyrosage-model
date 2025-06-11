@@ -1,0 +1,18 @@
+=== Best Model ===
+metric,value
+Dataset,Endocrine_Disruption_NR-AhR
+Accuracy,0.8627145085803433
+Precision,0.43859649122807015
+Recall,0.6756756756756757
+F1 Score,0.5319148936170213
+AUC,0.8710079126745793
+name,larger_model
+hidden_channels,128
+num_layers,3
+num_timesteps,3
+dropout,0.1
+learning_rate,0.0005
+weight_decay,0.0001
+batch_size,32
+epochs,50
+patience,10

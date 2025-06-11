@@ -1,0 +1,18 @@
+=== Best Model ===
+metric,value
+Dataset,Irritation_Corrosion_Eye_Irritation
+Accuracy,0.9209756097560976
+Precision,0.9465449804432855
+Recall,0.9477806788511749
+F1 Score,0.9471624266144814
+AUC,0.9363539219936086
+name,baseline
+hidden_channels,64
+num_layers,2
+num_timesteps,2
+dropout,0.2
+learning_rate,0.001
+weight_decay,1e-05
+batch_size,32
+epochs,50
+patience,10
