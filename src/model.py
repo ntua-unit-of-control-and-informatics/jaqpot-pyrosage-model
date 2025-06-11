@@ -170,7 +170,7 @@ class PyrosageModelService:
                 
                 # Make prediction
                 with torch.no_grad():
-                    prediction = model(batch)
+                    prediction = model(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
                     pred_value = prediction.cpu().numpy().flatten()[0]
                 
                 # Create prediction dict

@@ -21,6 +21,8 @@ def test_prediction():
     """Test a simple prediction"""
     test_data = {
         "dataset": {
+            "type": "PREDICTION",
+            "entryType": "ARRAY",
             "input": [
                 {
                     "smiles": "CCO",  # Ethanol
@@ -35,7 +37,17 @@ def test_prediction():
             ]
         },
         "model": {
-            "dependent_features": [{"key": "prediction"}]
+            "id": 1,
+            "type": "SKLEARN_ONNX",
+            "task": "MULTICLASS_CLASSIFICATION",
+            "rawModel": "pyrosage_attentivefp",
+            "independentFeatures": [
+                {"key": "smiles", "name": "SMILES", "featureType": "STRING"},
+                {"key": "model_name", "name": "Model Name", "featureType": "STRING"}
+            ],
+            "dependentFeatures": [
+                {"key": "prediction", "name": "Prediction", "featureType": "CATEGORICAL"}
+            ]
         }
     }
     
@@ -62,6 +74,8 @@ def test_invalid_model():
     """Test prediction with invalid model name"""
     test_data = {
         "dataset": {
+            "type": "PREDICTION",
+            "entryType": "ARRAY",
             "input": [
                 {
                     "smiles": "CCO",
@@ -71,7 +85,17 @@ def test_invalid_model():
             ]
         },
         "model": {
-            "dependent_features": [{"key": "prediction"}]
+            "id": 1,
+            "type": "SKLEARN_ONNX",
+            "task": "MULTICLASS_CLASSIFICATION",
+            "rawModel": "pyrosage_attentivefp",
+            "independentFeatures": [
+                {"key": "smiles", "name": "SMILES", "featureType": "STRING"},
+                {"key": "model_name", "name": "Model Name", "featureType": "STRING"}
+            ],
+            "dependentFeatures": [
+                {"key": "prediction", "name": "Prediction", "featureType": "CATEGORICAL"}
+            ]
         }
     }
     

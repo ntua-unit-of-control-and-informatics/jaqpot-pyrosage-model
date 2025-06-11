@@ -44,6 +44,8 @@ Example input:
 ```json
 {
   "dataset": {
+    "type": "TABULAR",
+    "entryType": "ARRAY",
     "input": [
       {
         "smiles": "CCO",
@@ -55,6 +57,18 @@ Example input:
         "model_name": "KOW", 
         "jaqpotRowId": 2
       }
+    ]
+  },
+  "model": {
+    "type": "TORCH_GEOMETRIC",
+    "task": "MULTICLASS_CLASSIFICATION",
+    "rawModel": "pyrosage_attentivefp",
+    "independentFeatures": [
+      {"key": "smiles", "name": "SMILES", "featureType": "TEXT"},
+      {"key": "model_name", "name": "Model Name", "featureType": "TEXT"}
+    ],
+    "dependentFeatures": [
+      {"key": "prediction", "name": "Prediction", "featureType": "NUMERIC"}
     ]
   }
 }
@@ -123,6 +137,8 @@ curl -X POST "http://localhost:8000/infer" \
   -H "Content-Type: application/json" \
   -d '{
     "dataset": {
+      "type": "TABULAR",
+      "entryType": "ARRAY",
       "input": [
         {
           "smiles": "CCO",
@@ -132,7 +148,16 @@ curl -X POST "http://localhost:8000/infer" \
       ]
     },
     "model": {
-      "dependent_features": [{"key": "prediction"}]
+      "type": "TORCH_GEOMETRIC",
+      "task": "MULTICLASS_CLASSIFICATION",
+      "rawModel": "pyrosage_attentivefp",
+      "independentFeatures": [
+        {"key": "smiles", "name": "SMILES", "featureType": "TEXT"},
+        {"key": "model_name", "name": "Model Name", "featureType": "TEXT"}
+      ],
+      "dependentFeatures": [
+        {"key": "prediction", "name": "Prediction", "featureType": "NUMERIC"}
+      ]
     }
   }'
 ```
