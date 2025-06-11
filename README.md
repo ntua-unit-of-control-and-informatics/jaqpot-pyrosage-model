@@ -44,33 +44,34 @@ Example input:
 ```json
 {
   "dataset": {
-    "type": "TABULAR",
-    "entryType": "ARRAY",
-    "input": [
-      {
-        "smiles": "CCO",
-        "model_name": "AMES",
-        "jaqpotRowId": 1
-      },
-      {
-        "smiles": "c1ccccc1",
-        "model_name": "KOW", 
-        "jaqpotRowId": 2
-      }
-    ]
-  },
-  "model": {
-    "type": "TORCH_GEOMETRIC",
-    "task": "MULTICLASS_CLASSIFICATION",
-    "rawModel": "pyrosage_attentivefp",
-    "independentFeatures": [
-      {"key": "smiles", "name": "SMILES", "featureType": "TEXT"},
-      {"key": "model_name", "name": "Model Name", "featureType": "TEXT"}
-    ],
-    "dependentFeatures": [
-      {"key": "prediction", "name": "Prediction", "featureType": "NUMERIC"}
-    ]
-  }
+        "type": "PREDICTION",
+        "entryType": "ARRAY",
+        "input": [
+            {
+                "smiles": "CCO",  # Ethanol
+                "model_name": "AMES",
+                "jaqpotRowId": 1
+            },
+            {
+                "smiles": "c1ccccc1",  # Benzene
+                "model_name": "KOW",
+                "jaqpotRowId": 2
+            }
+        ]
+    },
+    "model": {
+        "id": 1,
+        "type": "SKLEARN_ONNX",
+        "task": "MULTICLASS_CLASSIFICATION",
+        "rawModel": "pyrosage_attentivefp",
+        "independentFeatures": [
+            {"key": "smiles", "name": "SMILES", "featureType": "STRING"},
+            {"key": "model_name", "name": "Model Name", "featureType": "STRING"}
+        ],
+        "dependentFeatures": [
+            {"key": "prediction", "name": "Prediction", "featureType": "CATEGORICAL"}
+        ]
+    }
 }
 ```
 
