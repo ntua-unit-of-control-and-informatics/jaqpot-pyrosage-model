@@ -79,12 +79,12 @@ Example input:
 
 The service returns predictions with metadata:
 
-For classification models:
+For classification models (returns 0/1):
 ```json
 {
   "predictions": [
     {
-      "prediction": 0.23,
+      "prediction": 1,
       "jaqpotMetadata": {
         "jaqpotRowId": 1,
         "model_name": "AMES",
@@ -98,7 +98,7 @@ For classification models:
 }
 ```
 
-For regression models:
+For regression models (returns continuous values):
 ```json
 {
   "predictions": [

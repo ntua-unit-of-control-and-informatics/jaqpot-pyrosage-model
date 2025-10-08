@@ -172,28 +172,34 @@ class PyrosageModelService:
                 with torch.no_grad():
                     prediction = model(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
                     pred_value = prediction.cpu().numpy().flatten()[0]
-                
-                # Create prediction dict
-                if len(dependent_feature_keys) > 0:
-                    prediction_dict = {dependent_feature_keys[0]: float(pred_value)}
-                else:
-                    prediction_dict = {"prediction": float(pred_value)}
-                
-                # Add metadata
+
+                # Prepare metadata (augmented below for classification)
                 metadata = {
                     "jaqpotRowId": jaqpot_row_id,
                     "model_name": model_name,
                     "model_type": model_type,
-                    "smiles": smiles
+                    "smiles": smiles,
                 }
-                
-                # For classification models, add probability information
+
+                # Build prediction output depending on model type
                 if model_type == "classification":
-                    # Convert logit to probability using sigmoid
+                    # Convert logit to probability and hard class (0/1)
                     prob = torch.sigmoid(torch.tensor(pred_value)).item()
+                    pred_class = int(prob >= 0.5)
+                    if len(dependent_feature_keys) > 0:
+                        prediction_dict = {dependent_feature_keys[0]: pred_class}
+                    else:
+                        prediction_dict = {"prediction": pred_class}
+                    # Enrich metadata
                     metadata["probability"] = float(prob)
-                    metadata["predicted_class"] = int(prob > 0.5)
-                
+                    metadata["predicted_class"] = pred_class
+                else:
+                    # Regression returns continuous value
+                    if len(dependent_feature_keys) > 0:
+                        prediction_dict = {dependent_feature_keys[0]: float(pred_value)}
+                    else:
+                        prediction_dict = {"prediction": float(pred_value)}
+
                 prediction_dict["jaqpotMetadata"] = metadata
                 prediction_results.append(prediction_dict)
                 
